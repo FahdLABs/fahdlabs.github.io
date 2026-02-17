@@ -1,32 +1,261 @@
 /* Arabic localization and RTL refinements */
+/* تحسينات للغة العربية + دعم اتجاه RTL (من اليمين لليسار) */
 
-html[lang="ar"] {
-    --base-font-family: "Noto Sans Arabic", "Tajawal", "Cairo", var(--sys-font-family), sans-serif;
-    --article-font-family: "Noto Sans Arabic", "Tajawal", "Cairo", var(--sys-font-family), sans-serif;
+:root { /* الجذر: هنا نعرّف متغيرات CSS الافتراضية (للثيم الفاتح) */
+
+    /* Theme colors (light) */
+    /* ألوان الثيم في الوضع الفاتح */
+    --body-background: #f6f7fb;      /* لون خلفية الصفحة */
+    --body-text-color: #1f2937;      /* لون النص الأساسي */
+    --card-background: #ffffff;      /* لون خلفية الكروت/الصناديق */
+    --accent-color: #0ea5e9;         /* لون التمييز (روابط/عناصر بارزة) */
+
+    /* Code */
+    /* إعدادات ألوان الكود (Code blocks / Inline code) */
+    --code-block-bg: #0f172a;                 /* لون خلفية بلوك الكود */
+    --code-block-border: rgba(15, 23, 42, 0.18); /* لون/شفافية إطار بلوك الكود */
+    --code-block-fg: rgba(255, 255, 255, 0.9);   /* لون نص الكود داخل البلوك */
+    --inline-code-bg: rgba(14, 165, 233, 0.12);  /* خلفية الكود داخل السطر (inline) */
+    --inline-code-border: rgba(14, 165, 233, 0.25); /* إطار inline code */
+    --inline-code-fg: #0b1220;                /* لون نص inline code */
+
+    /* Map Stack theme vars to our palette (fixes the brown wrapper around code blocks) */
+    /* ربط متغيرات ثيم Stack بمتغيراتنا (يحل مشكلة الإطار/الغلاف البني حول بلوكات الكود) */
+    --pre-background-color: var(--code-block-bg); /* يجعل خلفية <pre> مثل خلفية بلوك الكود */
+    --pre-text-color: var(--code-block-fg);       /* يجعل لون نص <pre> مثل لون نص الكود */
+    --code-background-color: var(--inline-code-bg); /* يجعل خلفية <code> داخل النص مثل inline */
+    --code-text-color: var(--inline-code-fg);       /* يجعل لون نص <code> داخل النص مثل inline */
+
+    /* Syntax colors */
+    /* ألوان تلوين الشفرة (Syntax Highlighting) */
+    --code-syntax-keyword: #60a5fa;             /* لون الكلمات المحجوزة مثل: if / for */
+    --code-syntax-string: #34d399;              /* لون النصوص داخل علامات الاقتباس */
+    --code-syntax-number: #a78bfa;              /* لون الأرقام */
+    --code-syntax-function: #fbbf24;            /* لون أسماء الدوال/الوظائف */
+    --code-syntax-operator: #f472b6;            /* لون العمليات مثل + - = */
+    --code-syntax-comment: rgba(148, 163, 184, 0.75); /* لون التعليقات داخل الكود */
+    --code-syntax-punctuation: rgba(226, 232, 240, 0.88); /* لون الأقواس والفواصل ... */
+    --code-syntax-line-highlight: rgba(56, 189, 248, 0.16); /* لون تظليل سطر محدد */
 }
 
-html[dir="rtl"] {
+:root[data-scheme="dark"] { /* الجذر في الوضع الداكن فقط */
+
+    /* Theme colors (dark) */
+    /* ألوان الثيم في الوضع الداكن */
+    --body-background: #0b1220;                 /* خلفية الصفحة بالداكن */
+    --body-text-color: rgba(255, 255, 255, 0.78); /* لون النص الأساسي بالداكن */
+    --card-background: #111a2e;                 /* خلفية الكروت بالداكن */
+    --accent-color: #38bdf8;                    /* لون التمييز بالداكن */
+
+    /* Code */
+    /* إعدادات الكود بالداكن */
+    --code-block-bg: #0a1222;                   /* خلفية بلوك الكود بالداكن */
+    --code-block-border: rgba(148, 163, 184, 0.18); /* إطار بلوك الكود بالداكن */
+    --code-block-fg: rgba(255, 255, 255, 0.92); /* لون نص الكود بالداكن */
+    --inline-code-bg: rgba(56, 189, 248, 0.16); /* خلفية inline code بالداكن */
+    --inline-code-border: rgba(56, 189, 248, 0.28); /* إطار inline code بالداكن */
+    --inline-code-fg: rgba(255, 255, 255, 0.9); /* لون نص inline code بالداكن */
+
+    /* Syntax colors */
+    /* ألوان التلوين بالداكن */
+    --code-syntax-keyword: #7dd3fc;             /* keywords */
+    --code-syntax-string: #34d399;              /* strings */
+    --code-syntax-number: #c4b5fd;              /* numbers */
+    --code-syntax-function: #fbbf24;            /* functions */
+    --code-syntax-operator: #fb7185;            /* operators */
+    --code-syntax-comment: rgba(148, 163, 184, 0.75); /* comments */
+    --code-syntax-punctuation: rgba(226, 232, 240, 0.88); /* punctuation */
+    --code-syntax-line-highlight: rgba(56, 189, 248, 0.16); /* line highlight */
+}
+
+/* Code blocks + inline code (override Chroma defaults) */
+/* تنسيق بلوكات الكود + كود داخل السطر (تجاوز إعدادات Chroma الافتراضية) */
+.article-content .highlight {                       /* صندوق/حاوية الكود */
+    background: var(--code-block-bg) !important;    /* خلفية بلوك الكود (إجباري) */
+    border: 1px solid var(--code-block-border);     /* إطار بلوك الكود */
+    border-radius: 12px;                            /* زوايا دائرية */
+}
+
+.article-content .highlight pre,
+.article-content pre,
+.article-content .chroma,
+.article-content .chroma pre {                      /* عناصر <pre> وchroma داخل المقال */
+    background: var(--code-block-bg) !important;    /* نفس الخلفية */
+    color: var(--code-block-fg);                    /* لون نص الكود */
+    border: 1px solid var(--code-block-border);     /* نفس الإطار */
+    border-radius: 12px;                            /* نفس الزوايا */
+}
+
+.article-content .highlight pre,
+.article-content .highlight .chroma,
+.article-content .highlight .chroma pre {           /* داخل highlight بالذات */
+    border: 0 !important;                           /* يلغي الإطار الداخلي لتجنب تكرار الإطار */
+    border-radius: 0;                               /* يلغي الزوايا الداخلية */
+}
+
+.article-content .chroma table,
+.article-content .chroma td,
+.article-content .chroma .lntable,
+.article-content .chroma .lntd {                    /* جداول line numbers داخل chroma */
+    background: transparent !important;             /* يجعل الخلفية شفافة (بدون مربعات غريبة) */
+}
+
+.article-content pre code {                         /* <code> داخل <pre> */
+    background: transparent !important;             /* يلغي أي خلفية داخلية */
+    color: inherit;                                 /* يأخذ لون النص من الأب */
+}
+
+.article-content :not(pre) > code,
+.article-content p > code,
+.article-content li > code,
+.article-content td > code {                        /* inline code داخل النص (وليس داخل pre) */
+    background: var(--inline-code-bg);              /* خلفية inline code */
+    color: var(--inline-code-fg);                   /* لون نص inline code */
+    border: 1px solid var(--inline-code-border);    /* إطار خفيف */
+    padding: 0.12em 0.38em;                         /* مسافة داخلية حول النص */
+    border-radius: 0.5em;                           /* تدوير الحواف */
+}
+
+/* Line numbers */
+/* لون أرقام الأسطر داخل بلوك الكود */
+.article-content .chroma .lnt,
+.article-content .chroma .ln {
+    color: rgba(148, 163, 184, 0.85);               /* لون أرقام الأسطر */
+}
+
+/* Syntax highlighting: replace the theme's brown/yellow palette */
+/* تلوين الشفرة: استبدال ألوان الثيم الافتراضية (البني/الأصفر) */
+
+.article-content .chroma .k,
+.article-content .chroma .kc,
+.article-content .chroma .kd,
+.article-content .chroma .kp,
+.article-content .chroma .kr,
+.article-content .chroma .kt,
+.article-content .chroma .kn,
+.article-content .chroma .nt {                      /* فئات الكلمات المحجوزة/أنواع/و... */
+    color: var(--code-syntax-keyword) !important;   /* لون keywords */
+}
+
+.article-content .chroma .s,
+.article-content .chroma .sa,
+.article-content .chroma .sb,
+.article-content .chroma .sc,
+.article-content .chroma .dl,
+.article-content .chroma .sd,
+.article-content .chroma .s2,
+.article-content .chroma .sh,
+.article-content .chroma .si,
+.article-content .chroma .sx,
+.article-content .chroma .sr,
+.article-content .chroma .s1,
+.article-content .chroma .ss,
+.article-content .chroma .ld {                      /* فئات الـ strings */
+    color: var(--code-syntax-string) !important;    /* لون strings */
+}
+
+.article-content .chroma .m,
+.article-content .chroma .mb,
+.article-content .chroma .mf,
+.article-content .chroma .mh,
+.article-content .chroma .mi,
+.article-content .chroma .il,
+.article-content .chroma .mo {                      /* فئات الأرقام */
+    color: var(--code-syntax-number) !important;    /* لون numbers */
+}
+
+.article-content .chroma .nf,
+.article-content .chroma .na,
+.article-content .chroma .nc,
+.article-content .chroma .nd,
+.article-content .chroma .ne,
+.article-content .chroma .nx {                      /* فئات أسماء الدوال/الأنواع */
+    color: var(--code-syntax-function) !important;  /* لون functions/identifiers */
+}
+
+.article-content .chroma .o,
+.article-content .chroma .ow {                      /* فئات العمليات */
+    color: var(--code-syntax-operator) !important;  /* لون operators */
+}
+
+.article-content .chroma .p {                       /* فئات علامات الترقيم */
+    color: var(--code-syntax-punctuation) !important; /* لون الأقواس والفواصل */
+}
+
+.article-content .chroma .c,
+.article-content .chroma .ch,
+.article-content .chroma .cm,
+.article-content .chroma .c1,
+.article-content .chroma .cs,
+.article-content .chroma .cp,
+.article-content .chroma .cpf,
+.article-content .chroma .gu {                      /* فئات التعليقات */
+    color: var(--code-syntax-comment) !important;   /* لون comments */
+}
+
+.article-content .chroma .hl {                      /* سطر مميز (highlight line) */
+    background: var(--code-syntax-line-highlight) !important; /* خلفية تظليل السطر */
+}
+
+/* Headings: increase contrast + navigation clarity */
+/* العناوين: وضوح أعلى + تحسين التنقل (خصوصاً عند الضغط على رابط عنوان) */
+.article-content h2,
+.article-content h3,
+.article-content h4 {
+    scroll-margin-top: 110px;                       /* يترك مسافة أعلى العنوان عند الانتقال إليه (حتى لا يختفي تحت الهيدر) */
+}
+
+.article-content h2 {                               /* عنوان مستوى 2 */
+    color: var(--accent-color);                     /* لون العنوان */
+    border-inline-start: 4px solid var(--accent-color); /* خط جانبي (يكون يسار في LTR ويمين في RTL) */
+    padding-inline-start: 12px;                     /* مسافة داخلية بعد الخط الجانبي */
+    padding-block: 4px;                             /* مسافة داخلية أعلى/أسفل */
+    margin-top: 2.2em;                              /* مسافة فوق العنوان */
+}
+
+.article-content h2::after {                        /* خط فاصل بعد h2 */
+    content: "";                                    /* عنصر وهمي */
+    display: block;                                 /* يعرض كسطر */
+    height: 1px;                                    /* سماكة الخط */
+    margin-top: 0.65em;                             /* مسافة فوق الخط */
+    background: var(--card-separator-color);        /* لون الخط الفاصل (من متغير الثيم) */
+}
+
+.article-content h3 {                               /* عنوان مستوى 3 */
+    color: var(--card-text-color-main);             /* لون النص الأساسي للعناوين (من الثيم) */
+    border-inline-start: 3px solid rgba(56, 189, 248, 0.35); /* خط جانبي خفيف */
+    padding-inline-start: 10px;                     /* مسافة بعد الخط */
+    margin-top: 1.8em;                              /* مسافة فوق العنوان */
+}
+
+html[lang="ar"] { /* عندما لغة الصفحة عربية */
+    --base-font-family: "Noto Sans Arabic", "Tajawal", "Cairo", var(--sys-font-family), sans-serif; /* خط عام لكل الموقع */
+    --article-font-family: "Noto Sans Arabic", "Tajawal", "Cairo", var(--sys-font-family), sans-serif; /* خط المقالات */
+}
+
+html[dir="rtl"] { /* عندما اتجاه الصفحة RTL */
     body {
-        text-align: right;
+        text-align: right;                          /* محاذاة نص الصفحة لليمين */
     }
 
     input,
     textarea {
-        text-align: right;
+        text-align: right;                          /* محاذاة النص داخل الحقول لليمين */
     }
 
     .article-content ul,
     .article-content ol {
-        padding-right: 2rem;
-        padding-left: 0;
+        padding-right: 2rem;                        /* مسافة يمين للقوائم (بدل اليسار) */
+        padding-left: 0;                            /* إلغاء مسافة اليسار */
     }
 
     /* Keep technical snippets and structured data readable in mixed-direction pages */
+    /* نخلي الأشياء التقنية تقرأ طبيعي حتى لو الصفحة RTL */
     .article-content pre,
     .article-content code,
     .article-content table,
     .article-content kbd {
-        direction: ltr;
-        text-align: left;
+        direction: ltr;                             /* اتجاه يسار-ليمين داخل الكود/الجداول */
+        text-align: left;                           /* محاذاة لليسار داخلها */
     }
 }
