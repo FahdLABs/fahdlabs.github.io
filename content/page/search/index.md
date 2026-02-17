@@ -1,5 +1,5 @@
 ---
-title: "Search"
+title: "البحث"
 slug: "search"
 layout: "search"
 outputs:
@@ -8,6 +8,6 @@ outputs:
 menu:
     main:
         weight: 3
-        params: 
+        params:
             icon: search
 ---

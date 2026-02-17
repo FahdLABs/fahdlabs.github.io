@@ -1,3 +1,32 @@
-/*
-    You can add your own custom styles here.
-*/
+/* Arabic localization and RTL refinements */
+
+html[lang="ar"] {
+    --base-font-family: "Noto Sans Arabic", "Tajawal", "Cairo", var(--sys-font-family), sans-serif;
+    --article-font-family: "Noto Sans Arabic", "Tajawal", "Cairo", var(--sys-font-family), sans-serif;
+}
+
+html[dir="rtl"] {
+    body {
+        text-align: right;
+    }
+
+    input,
+    textarea {
+        text-align: right;
+    }
+
+    .article-content ul,
+    .article-content ol {
+        padding-right: 2rem;
+        padding-left: 0;
+    }
+
+    /* Keep technical snippets and structured data readable in mixed-direction pages */
+    .article-content pre,
+    .article-content code,
+    .article-content table,
+    .article-content kbd {
+        direction: ltr;
+        text-align: left;
+    }
+}

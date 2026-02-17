@@ -1,8 +1,9 @@
 # Pages placed under these sections will be shown on homepage and archive page.
 mainSections = ["post"]
+description  = "FahdLABs | مختّبر فهد - هنا أشارك كل شيء تقني يشدني: من Windows وLinux إلى AI، الأدوات، المراجعات، وتجارب حقيقية بدون لف ودوران."
 # Output page's full content in RSS.
 rssFullContent = true
-favicon        = "img/favicon.png"
+favicon        = "img/favicon-fhd.png"
 
 # Accepted values: "default", "lastmod"
 # default = see https://gohugo.io/quick-reference/glossary/#default-sort-order
@@ -10,17 +11,17 @@ favicon        = "img/favicon.png"
 SortBy              = "default"
 
 [footer]
-    since      = 2020
-    customText = ""
+    since      = 2026
+    customText = "FahdLABs - تقنية على السريع وبأسلوب بسيط: نجرب، نضبط، ونشارك اللي ينفع."
 
 [dateFormat]
     published   = ":date_full"
     lastUpdated = ":date_full"
 
 [sidebar]
-    emoji    = "🍥"
-    subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    avatar   = "img/avatar.png"
+    emoji    = "👺"
+    subtitle = "يا هلا! هذه مدونة FahdLABs. كل ما يحمّسني في التقنية بتحصله هنا: Windows، Linux، AI، مراجعات، أدوات، وتجارب عملية من الواقع."
+    avatar   = "img/avatar-fhd.png"
 
 [article]
     headingAnchor = false
@@ -29,19 +30,19 @@ SortBy              = "default"
 
     [article.license]
         enabled = true
-        default = "Licensed under CC BY-NC-SA 4.0"
+        default = "مرخّص تحت CC BY-NC-SA 4.0"
 
 [widgets]
     homepage = [
         { type = "search" },
-        { type = "archives", params = { limit = 5 } },
+        # { type = "archives", params = { limit = 5 } },
         { type = "categories", params = { limit = 10 } },
         { type = "tag-cloud", params = { limit = 10 } },
     ]
     page = [{ type = "toc" }]
 
 [opengraph.twitter]
-    site = ""
+    site = "@fahdlabs"
     card = "summary_large_image"
 
 [colorScheme]
