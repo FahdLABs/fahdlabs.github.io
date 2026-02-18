@@ -462,6 +462,20 @@ git push origin main
   <path d="M16.5 7.5v.01" />
 </svg>
 ```
+مثال (Youtube):
+
+1) احفظ ملف:
+`assets/icons/brand-youtube.svg`
+
+2) الصق هذا الـ SVG:
+
+```xml
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-youtube" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M2 8a4 4 0 0 1 4 -4h12a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-12a4 4 0 0 1 -4 -4v-8" />
+  <path d="M10 9l5 3l-5 3z" />
+</svg>
+```
 
 قاعدة سهلة:
 - اسم الملف (بدون `.svg`) لازم يطابق `icon`.
@@ -516,9 +530,9 @@ provider = "disqus"
 
     /* Code */
     /* إعدادات ألوان الكود (Code blocks / Inline code) */
-    --code-block-bg: #0f172a;                 /* لون خلفية بلوك الكود */
-    --code-block-border: rgba(15, 23, 42, 0.18); /* لون/شفافية إطار بلوك الكود */
-    --code-block-fg: rgba(255, 255, 255, 0.9);   /* لون نص الكود داخل البلوك */
+    --code-block-bg: #f8fafc;                 /* لون خلفية بلوك الكود */
+    --code-block-border: rgba(15, 23, 42, 0.12); /* لون/شفافية إطار بلوك الكود */
+    --code-block-fg: #0b1220;   /* لون نص الكود داخل البلوك */
     --inline-code-bg: rgba(14, 165, 233, 0.12);  /* خلفية الكود داخل السطر (inline) */
     --inline-code-border: rgba(14, 165, 233, 0.25); /* إطار inline code */
     --inline-code-fg: #0b1220;                /* لون نص inline code */
@@ -532,14 +546,15 @@ provider = "disqus"
 
     /* Syntax colors */
     /* ألوان تلوين الشفرة (Syntax Highlighting) */
-    --code-syntax-keyword: #60a5fa;             /* لون الكلمات المحجوزة مثل: if / for */
-    --code-syntax-string: #34d399;              /* لون النصوص داخل علامات الاقتباس */
-    --code-syntax-number: #a78bfa;              /* لون الأرقام */
-    --code-syntax-function: #fbbf24;            /* لون أسماء الدوال/الوظائف */
-    --code-syntax-operator: #f472b6;            /* لون العمليات مثل + - = */
-    --code-syntax-comment: rgba(148, 163, 184, 0.75); /* لون التعليقات داخل الكود */
-    --code-syntax-punctuation: rgba(226, 232, 240, 0.88); /* لون الأقواس والفواصل ... */
-    --code-syntax-line-highlight: rgba(56, 189, 248, 0.16); /* لون تظليل سطر محدد */
+    --code-syntax-keyword: #2563eb;             /* لون الكلمات المحجوزة مثل: if / for */
+    --code-syntax-string: #047857;              /* لون النصوص داخل علامات الاقتباس */
+    --code-syntax-number: #7c3aed;              /* لون الأرقام */
+    --code-syntax-function: #b45309;            /* لون أسماء الدوال/الوظائف */
+    --code-syntax-operator: #be185d;            /* لون العمليات مثل + - = */
+    --code-syntax-comment: rgba(71, 85, 105, 0.85); /* لون التعليقات داخل الكود */
+    --code-syntax-punctuation: rgba(15, 23, 42, 0.72); /* لون الأقواس والفواصل ... */
+    --code-syntax-line-highlight: rgba(14, 165, 233, 0.12); /* لون تظليل سطر محدد */
+    --code-line-number: rgba(71, 85, 105, 0.65); /* لون الرقم */
 }
 
 :root[data-scheme="dark"] { /* الجذر في الوضع الداكن فقط */
@@ -763,7 +778,6 @@ html[dir="rtl"] { /* عندما اتجاه الصفحة RTL */
         text-align: left;                           /* محاذاة لليسار داخلها */
     }
 }
-
 ```
 
 إذا ما ظهر التغيير:
